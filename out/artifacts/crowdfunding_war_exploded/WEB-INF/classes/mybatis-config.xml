@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--configuration核心配置文件-->
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <package name="com.cxy.pojo"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+            <property name="reasonable" value="true"/>
+            <property name="autoRuntimeDialect" value="false"/>
+        </plugin>
+    </plugins>
+
+    <mappers>
+        <mapper class="com.cxy.dao.AdminMapper"/>
+        <mapper class="com.cxy.dao.UserMapper"/>
+        <mapper class="com.cxy.dao.ProjectMapper"/>
+    </mappers>
+
+
+</configuration>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxy.dao.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.cxy.pojo.Project">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="project_description" jdbcType="VARCHAR" property="projectDescription"/>
+        <result column="money" jdbcType="BIGINT" property="money"/>
+        <result column="day" jdbcType="INTEGER" property="day"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="deploy_date" jdbcType="VARCHAR" property="deployDate"/>
+        <result column="support_money" jdbcType="INTEGER" property="supportMoney"/>
+        <result column="supporter" jdbcType="INTEGER" property="supporter"/>
+        <result column="member_name" jdbcType="VARCHAR" property="memberName"/>
+        <result column="create_date" jdbcType="VARCHAR" property="createDate"/>
+        <result column="picture_path" jdbcType="VARCHAR" property="picturePath"/>
+    </resultMap>
+    <insert id="addProject" parameterType="project">
+        insert into project(id,project_name,project_description,money,day,status,deploy_date,support_money,supporter,member_name,create_date,picture_path)
+        values (#{id},#{projectName},#{projectDescription},#{money},#{day},#{status},#{deployDate},#{supportMoney},#{supporter},#{memberName},#{createDate},#{picturePath})
+    </insert>
+    <delete id="delProjectById" parameterType="int">
+        delete from project where id=#{id}
+    </delete>
+    <select id="queryProjectById" resultType="Project">
+        select  * from project where id=#{id}
+    </select>
+    <select id="queryAllProject" resultType="project">
+        select * from project
+    </select>
+    <select id="selectProjectByKeyword_1" resultMap="BaseResultMap">
+        select id,project_name,money,deploy_date,supporter,picture_path
+        from project
+        where project_name like concat("%",#{keyword},"%") and status=1
+    </select>
+    <select id="selectProjectByKeyword_0" resultMap="BaseResultMap">
+        select project_name,member_name,money,day,create_date
+        from project
+        where project_name like concat("%",#{keyword},"%") and status=0
+    </select>
+    <select id="queryProjectByName" resultType="Project">
+        select * from project where project_name=#{projectName}
+    </select>
+    <update id="changeStatusToOne" parameterType="Project">
+        update project set status=1 ,deploy_date=#{deployDate} where project_name=#{projectName}
+    </update>
+    <select id="selectProjectByKeywordInMyProject" resultMap="BaseResultMap">
+        select project_name,money,deploy_date,support_money,supporter
+        from project
+        where project_name like concat("%",#{keyword},"%") and member_name=#{account}
+    </select>
+    <delete id="delProjectByProjectName" parameterType="string">
+        delete from project where project_name=#{projectName}
+    </delete>
+    <update id="setSupportById">
+        update project set support_money=support_money+#{supportMoney},supporter=supporter+1 where id=#{id}
+    </update>
+    <select id="selectProjectByKeyword_10" resultMap="BaseResultMap">
+        select project_name,member_name,money,day,create_date
+        from project
+        where project_name like concat("%",#{keyword},"%")
+    </select>
+</mapper>

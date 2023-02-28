@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxy.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.cxy.pojo.User">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="addUser" parameterType="User">
+        insert into user(id,account,user_pwd,email,create_time)
+        values (#{id},#{account},#{userPwd},#{email},#{createTime})
+    </insert>
+    <delete id="deleteUserByAccount" parameterType="string">
+        delete from user where account=#{account}
+    </delete>
+    <update id="updateUser" parameterType="User">
+        update user set account=#{account},email=#{email}
+        where id=#{id}
+    </update>
+    <select id="queryUserByAccount" resultType="User">
+        select * from user where account=#{account}
+    </select>
+    <select id="queryAllUser" resultType="User">
+        select * from user
+    </select>
+    <select id="selectUserByKeyword" resultMap="BaseResultMap">
+        select id,account,email,create_time
+        from user
+        where account like concat("%",#{keyword},"%") or email like concat("%", #{keyword}, "%")
+    </select>
+    <select id="selectAllUserByPageHelper" resultMap="BaseResultMap">
+        select account,email,create_time from user
+    </select>
+
+</mapper>

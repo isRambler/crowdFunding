@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxy.dao.AdminMapper">
+    <insert id="addAdmin" parameterType="Admin">
+        insert into admin(id,account,admin_pwd,email,create_time)
+        values (#{id},#{account},#{adminPwd},#{email},#{createTime})
+    </insert>
+    <delete id="deleteAdminByAccount" parameterType="string">
+        delete from admin where account=#{account}
+    </delete>
+    <update id="updateAdmin" parameterType="Admin">
+        update admin set admin_pwd=#{adminPwd},email=#{email}
+        where account=#{account}
+    </update>
+    <select id="queryAdminByAccount" resultType="Admin">
+        select * from admin where account=#{account}
+    </select>
+    <select id="queryAllAdmin" resultType="Admin">
+        select * from admin
+    </select>
+</mapper>
